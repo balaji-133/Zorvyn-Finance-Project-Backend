@@ -45,8 +45,8 @@ Zorvyn Finance Dashboard Backend is a complete, lightweight, and high-performanc
 
 **Status: ✅ FUNCTIONAL & OPTIMIZED**
 
-- **API Base URL:** *(To be deployed on Render/Vercel/Heroku)*
-- **Interactive API Docs:** `[YOUR_DOMAIN]/api-docs/`
+- **API Base URL:** `https://zorvyn-finance-project-backend.onrender.com`
+- **Interactive API Docs:** `https://zorvyn-finance-project-backend.onrender.com/api-docs/`
 
 All endpoints are fully validated, secured against XSS/CSP vulnerabilities, and ready for production.
 
