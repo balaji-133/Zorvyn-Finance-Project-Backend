@@ -1,6 +1,6 @@
 # 🚀 Finance Data Backend - Zorvyn Project
 
-Status: ✅ LIVE AND OPTIMIZED WITH REDIS
+Status: ✅ LIVE AND OPTIMIZED
 
 API Base URL: `https://zrovyn-finance-backend.onrender.com` (Example)
 
@@ -27,8 +27,6 @@ All endpoints are fully functional, tested, and high-performance.
 - ✅ **Overall Summary**: Total income, expenses, and net balance
 - ✅ **Category Breakdown**: Percentage and total per category
 - ✅ **Monthly Trends**: Growth and spending patterns
-- ✅ **Redis Caching**: Ultra-fast responses for dashboard and record listings
-- ✅ **Auto-Invalidation**: Cache clears automatically when data changes
 
 ### 4. Access Control
 - ✅ **RBAC**: Role-Based Access Control enforced at the middleware level
@@ -48,7 +46,6 @@ All endpoints are fully functional, tested, and high-performance.
 | **Framework** | Node.js / Express 5.0 |
 | **API** | RESTful API with JSON |
 | **Database** | MongoDB (Atlas / Local) |
-| **Caching** | Redis (Performance layer) |
 | **Authentication** | JWT (JSON Web Tokens) |
 | **Documentation** | Swagger / OpenAPI 3.0 |
 | **Security** | Helmet, Bcrypt, Express-Rate-Limit |
@@ -58,7 +55,6 @@ All endpoints are fully functional, tested, and high-performance.
 ### Prerequisites
 - Node.js 18+
 - MongoDB (Running locally or Atlas URI)
-- Redis Server (Optional, app will fall back to DB if unavailable)
 
 ### Installation
 
@@ -79,7 +75,6 @@ All endpoints are fully functional, tested, and high-performance.
    PORT=5000
    MONGO_URI=your_mongodb_uri
    JWT_SECRET=your_super_secret_key
-   REDIS_URL=redis://localhost:6379
    NODE_ENV=development
    ```
 
@@ -105,7 +100,7 @@ All endpoints are fully functional, tested, and high-performance.
 - `DELETE /api/records/:id` - Soft delete record (Admin)
 
 ### 📊 Analytics & Dashboard
-- `GET /api/summary` - Get comprehensive dashboard stats (Cached)
+- `GET /api/summary` - Get comprehensive dashboard stats
 
 ## 🔐 Access Control Matrix
 
@@ -125,4 +120,4 @@ All endpoints are fully functional, tested, and high-performance.
 For issues or questions, please open an issue in the GitHub repository.
 
 **Created: April 3, 2026**
-**Status: Production Ready (v1.1 - Redis Optimized)**
+**Status: Production Ready (v1.1 - Optimized)**

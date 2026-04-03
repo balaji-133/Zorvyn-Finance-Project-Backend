@@ -1,24 +1,10 @@
 const FinancialRecord = require('../models/FinancialRecord');
-const { getCache, setCache, delCache, flushCache } = require('../utils/cache');
 
 // @desc    Get all records
 // @route   GET /api/records
 // @access  Private (Analyst, Admin, Viewer)
 exports.getRecords = async (req, res, next) => {
     try {
-        const cacheKey = `records_${JSON.stringify(req.query)}`;
-        const cachedData = await getCache(cacheKey);
-
-        if (cachedData) {
-            return res.status(200).json({
-                success: true,
-                source: 'cache',
-                count: cachedData.count,
-                pagination: cachedData.pagination,
-                data: cachedData.data
-            });
-        }
-
         let query;
 
         // Copy req.query
@@ -79,19 +65,11 @@ exports.getRecords = async (req, res, next) => {
             pagination.prev = { page: page - 1, limit };
         }
 
-        const responseData = {
+        res.status(200).json({
+            success: true,
             count: records.length,
             pagination,
             data: records
-        };
-
-        // Cache for 5 minutes
-        await setCache(cacheKey, responseData, 300);
-
-        res.status(200).json({
-            success: true,
-            source: 'database',
-            ...responseData
         });
     } catch (err) {
         next(err);
@@ -125,10 +103,6 @@ exports.createRecord = async (req, res, next) => {
 
         const record = await FinancialRecord.create(req.body);
 
-        // Invalidate caches
-        await delCache('dashboard_summary');
-        await flushCache(); // Flush all record list caches
-
         res.status(201).json({ success: true, data: record });
     } catch (err) {
         next(err);
@@ -151,10 +125,6 @@ exports.updateRecord = async (req, res, next) => {
             runValidators: true
         });
 
-        // Invalidate caches
-        await delCache('dashboard_summary');
-        await flushCache();
-
         res.status(200).json({ success: true, data: record });
     } catch (err) {
         next(err);
@@ -175,10 +145,6 @@ exports.deleteRecord = async (req, res, next) => {
         // Soft delete
         record.isDeleted = true;
         await record.save();
-
-        // Invalidate caches
-        await delCache('dashboard_summary');
-        await flushCache();
 
         res.status(200).json({ success: true, data: {} });
     } catch (err) {
