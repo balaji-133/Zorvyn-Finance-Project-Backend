@@ -29,21 +29,24 @@ if (process.env.NODE_ENV === 'development') {
 // Security headers with relaxed CSP for DevTools
 app.use(helmet({
     contentSecurityPolicy: {
-        useDefaults: true,
+        useDefaults: false,
         directives: {
-            defaultSrc: ["'self'"],
-            connectSrc: ["'self'", "http://localhost:5000", "ws://localhost:5000", "https:", "http:"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            imgSrc: ["'self'", "data:", "https:"],
-            frameSrc: ["'self'"],
-            upgradeInsecureRequests: null,
+            "default-src": ["'self'"],
+            "connect-src": ["'self'", "http://localhost:5000", "ws://localhost:5000"],
+            "script-src": ["'self'", "'unsafe-eval'", "'unsafe-inline'"],
+            "style-src": ["'self'", "'unsafe-inline'"],
+            "img-src": ["'self'", "data:", "https:"],
+            "font-src": ["'self'", "data:"],
         },
     },
 }));
 
 // Suppress common 404s (Favicon, Chrome DevTools paths)
-app.get(['/favicon.ico', '/.well-known/*'], (req, res) => res.status(204).end());
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+app.get('/.well-known/*path', (req, res) => res.status(204).end());
+
+// Redirect Root to API Docs
+app.get('/', (req, res) => res.redirect('/api-docs/'));
 
 // Enable CORS
 app.use(cors());
